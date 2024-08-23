@@ -1,0 +1,377 @@
+<html><head><base href="https://www.ant-nft-creator.com">
+<title>Ant-NFT Creator: Cyberpunk Edition</title>
+<style>
+  body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #0D0221 0%, #190835 100%);
+    color: #E6E6FA;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .panel {
+    background-color: rgba(75, 0, 130, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(75, 0, 130, 0.37);
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    text-align: center;
+    color: #FF00FF;
+    text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #9370DB;
+    font-size: 20px;
+    text-shadow: 0 0 5px #9370DB;
+  }
+  
+  #generateButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background: linear-gradient(45deg, #8A2BE2, #4B0082);
+    border: none;
+    border-radius: 50px;
+    color: #E6E6FA;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+  }
+  
+  #generateButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+  }
+  
+  .image-log {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .image-entry {
+    background-color: rgba(75, 0, 130, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+    position: relative;
+  }
+  
+  .image-entry:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+  }
+  
+  .image-entry img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+  }
+  
+  .image-entry::after {
+    content: "ANT-NFT";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: #FF00FF;
+    text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+  }
+  
+  .emoji-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+  
+  .emoji-button {
+    background-color: rgba(75, 0, 130, 0.3);
+    border: 2px solid rgba(147, 112, 219, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .emoji-button:hover {
+    transform: scale(1.1) rotate(10deg);
+    background-color: rgba(75, 0, 130, 0.5);
+    box-shadow: 0 0 15px rgba(147, 112, 219, 0.5);
+  }
+  
+  .emoji-button.active {
+    background-color: rgba(255, 0, 255, 0.3);
+    border-color: #FF00FF;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+  }
+  
+  .neon-pulse {
+    animation: neonPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes neonPulse {
+    0% { text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF; }
+    50% { text-shadow: 0 0 20px #FF00FF, 0 0 30px #FF00FF, 0 0 40px #FF00FF; }
+    100% { text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 30px #FF00FF; }
+  }
+
+  .nft-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+
+  .save-button, .publish-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background: linear-gradient(45deg, #8A2BE2, #4B0082);
+    border: none;
+    border-radius: 5px;
+    color: #E6E6FA;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+  }
+
+  .save-button:hover, .publish-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="panel">
+      <h1 class="neon-pulse">Ant-NFT Creator</h1>
+      <form id="imageForm">
+        <label>Choose Your Creature Base:</label>
+        <div id="animalEmojis" class="emoji-container"></div>
+        
+        <label>Select Extraordinary Power:</label>
+        <div id="powerEmojis" class="emoji-container"></div>
+        
+        <label>Pick Your Background:</label>
+        <div id="backgroundEmojis" class="emoji-container"></div>
+        
+        <button id="generateButton" type="submit">Generate Ant-NFT</button>
+      </form>
+    </div>
+    
+    <div class="panel">
+      <div id="imageLog" class="image-log"></div>
+    </div>
+  </div>
+
+  <script>
+    const animalEmojis = [
+      {emoji: "ðŸ’", text: "Monkey"}, {emoji: "ðŸ±", text: "Cat"}, {emoji: "ðŸ¶", text: "Dog"}, {emoji: "ðŸ˜", text: "Elephant"},
+      {emoji: "ðŸ»", text: "Bear"}, {emoji: "ðŸ¦", text: "Lion"}, {emoji: "ðŸ¦", text: "Gorilla"}, {emoji: "ðŸ­", text: "Mouse"},
+      {emoji: "ðŸ®", text: "Cow"}, {emoji: "ðŸ´", text: "Horse"}, {emoji: "ðŸ¬", text: "Dolphin"}, {emoji: "ðŸ¦‡", text: "Bat"},
+      {emoji: "ðŸ¦˜", text: "Kangaroo"}, {emoji: "ðŸŠ", text: "Crocodile"}, {emoji: "ðŸ¦Ž", text: "Lizard"}, {emoji: "ðŸ", text: "Snake"},
+      {emoji: "ðŸ¢", text: "Turtle"}, {emoji: "ðŸ¦Ž", text: "Gecko"}, {emoji: "ðŸ¸", text: "Frog"}, {emoji: "ðŸ¦…", text: "Eagle"},
+      {emoji: "ðŸ¦‰", text: "Owl"}, {emoji: "ðŸ§", text: "Penguin"}, {emoji: "ðŸ¦ˆ", text: "Shark"}, {emoji: "ðŸ™", text: "Octopus"},
+      {emoji: "ðŸ¦‹", text: "Butterfly"}, {emoji: "ðŸœ", text: "Ant"}, {emoji: "ðŸŒ³", text: "Tree"}, {emoji: "ðŸ„", text: "Mushroom"},
+      {emoji: "ðŸ¦ ", text: "Microbe"}, {emoji: "ðŸ¦", text: "Rhino"}, {emoji: "ðŸ¦’", text: "Giraffe"}, {emoji: "ðŸ¦“", text: "Zebra"},
+      {emoji: "ðŸ¦”", text: "Hedgehog"}, {emoji: "ðŸ¦™", text: "Llama"}, {emoji: "ðŸ¦¥", text: "Sloth"}, {emoji: "ðŸ¦¦", text: "Otter"}
+    ];
+
+    const powerEmojis = [
+      {emoji: "ðŸŒˆ", text: "Rainbow-making"},
+      {emoji: "âš¡", text: "Lightning-summoning"},
+      {emoji: "ðŸ”®", text: "Mystical-glowing"},
+      {emoji: "ðŸŒŸ", text: "Sparkle-emitting"},
+      {emoji: "â„ï¸", text: "Ice-sculpting"},
+      {emoji: "ðŸŒªï¸", text: "Whirlwind-creating"},
+      {emoji: "ðŸŒŠ", text: "Wave-riding"},
+      {emoji: "ðŸŒ±", text: "Nature-growing"},
+      {emoji: "ðŸ‘½", text: "Alien-communicating"},
+      {emoji: "ðŸ¤–", text: "Robo-transforming"},
+      {emoji: "ðŸ‘»", text: "Ghost-phasing"},
+      {emoji: "ðŸ§ ", text: "Mind-reading"},
+      {emoji: "ðŸ‘ï¸", text: "All-seeing"},
+      {emoji: "ðŸ¦¾", text: "Stretch-extending"},
+      {emoji: "ðŸ•·ï¸", text: "Web-spinning"},
+      {emoji: "ðŸ¦‹", text: "Butterfly-evolving"},
+      {emoji: "ðŸŒ™", text: "Moon-blessing"},
+      {emoji: "â˜€ï¸", text: "Sun-radiating"},
+      {emoji: "ðŸŒ", text: "Earth-shaping"},
+      {emoji: "ðŸŽ­", text: "Shape-shifting"},
+      {emoji: "ðŸŒ ", text: "Star-traveling"},
+      {emoji: "ðŸŒ€", text: "Hypno-swirling"},
+      {emoji: "ðŸ’¨", text: "Wind-whispering"},
+      {emoji: "ðŸŒº", text: "Flower-blooming"},
+      {emoji: "ðŸ¦ ", text: "Micro-exploring"},
+      {emoji: "ðŸŽ¨", text: "Color-changing"},
+      {emoji: "ðŸ§š", text: "Fairy-flying"},
+      {emoji: "ðŸ§™â€â™‚ï¸", text: "Spell-casting"},
+      {emoji: "ðŸ§œâ€â™€ï¸", text: "Ocean-breathing"},
+      {emoji: "ðŸ¦¸â€â™€ï¸", text: "Hero-leaping"},
+      {emoji: "ðŸ”±", text: "Ocean-commanding"},
+      {emoji: "ðŸŒ‹", text: "Lava-surfing"},
+      {emoji: "ðŸ”ï¸", text: "Mountain-moving"},
+      {emoji: "ðŸŒ“", text: "Day-night-switching"},
+      {emoji: "ðŸª", text: "Planet-orbiting"},
+      {emoji: "ðŸŽ¶", text: "Melody-weaving"},
+      {emoji: "ðŸ’Ž", text: "Crystal-growing"},
+      {emoji: "ðŸ•°ï¸", text: "Time-jumping"},
+      {emoji: "ðŸ§¿", text: "Fortune-telling"},
+      {emoji: "ðŸ”", text: "Detail-enhancing"}
+    ];
+
+    const backgroundEmojis = [
+      {emoji: "ðŸžï¸", text: "Forest"},
+      {emoji: "ðŸœï¸", text: "Desert"},
+      {emoji: "ðŸ”ï¸", text: "Mountains"},
+      {emoji: "ðŸŒ‹", text: "Volcano"},
+      {emoji: "ðŸ–ï¸", text: "Beach"},
+      {emoji: "ðŸŒŠ", text: "Ocean"},
+      {emoji: "ðŸ™ï¸", text: "City"},
+      {emoji: "ðŸŒŒ", text: "Space"},
+      {emoji: "ðŸ•Œ", text: "Ancient Ruins"},
+      {emoji: "ðŸ°", text: "Castle"},
+      {emoji: "ðŸŒ³", text: "Jungle"},
+      {emoji: "ðŸžï¸", text: "Valley"},
+      {emoji: "ðŸŒ„", text: "Sunset"},
+      {emoji: "ðŸŒ…", text: "Sunrise"},
+      {emoji: "ðŸŒ ", text: "Night Sky"},
+      {emoji: "ðŸ­", text: "Industrial"},
+      {emoji: "ðŸŽª", text: "Circus"},
+      {emoji: "ðŸŽ¢", text: "Amusement Park"},
+      {emoji: "ðŸ›ï¸", text: "Greek Temple"},
+      {emoji: "ðŸ¯", text: "Japanese Castle"}
+    ];
+
+    const animalContainer = document.getElementById('animalEmojis');
+    const powerContainer = document.getElementById('powerEmojis');
+    const backgroundContainer = document.getElementById('backgroundEmojis');
+    let selectedAnimal = null;
+    let selectedPower = null;
+    let selectedBackground = null;
+
+    function createEmojiButtons(container, items, clickHandler) {
+      items.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'emoji-button';
+        button.textContent = item.emoji;
+        button.title = item.text;
+        button.addEventListener('click', () => clickHandler(button, item));
+        container.appendChild(button);
+      });
+    }
+
+    createEmojiButtons(animalContainer, animalEmojis, (button, item) => {
+      const allButtons = animalContainer.querySelectorAll('.emoji-button');
+      allButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      selectedAnimal = item;
+    });
+
+    createEmojiButtons(powerContainer, powerEmojis, (button, item) => {
+      const allButtons = powerContainer.querySelectorAll('.emoji-button');
+      allButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      selectedPower = item;
+    });
+
+    createEmojiButtons(backgroundContainer, backgroundEmojis, (button, item) => {
+      const allButtons = backgroundContainer.querySelectorAll('.emoji-button');
+      allButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      selectedBackground = item;
+    });
+
+    function addImageEntry(animal, power, background) {
+      const imageWidth = 768;
+      const imageHeight = 512;
+      
+      const prompt = `A cyberpunk creature with ${animal.text} features and ${power.text} abilities, in a ${background.text} environment, digital art`;
+      const imageUrl = `https://picsum.photos/${imageWidth}/${imageHeight}?random=${Date.now()}`;
+      
+      const imageLog = document.getElementById('imageLog');
+      const newEntry = document.createElement('div');
+      newEntry.className = 'image-entry';
+      newEntry.innerHTML = `
+        <img src="${imageUrl}" alt="${power.text} ${animal.text} Creature in ${background.text}, HD photograph, cyberpunk concept art">
+        <div class="nft-buttons">
+          <button class="save-button">Save</button>
+          <button class="publish-button">Publish NFT</button>
+        </div>
+      `;
+      
+      imageLog.insertBefore(newEntry, imageLog.firstChild);
+
+      const saveButton = newEntry.querySelector('.save-button');
+      const publishButton = newEntry.querySelector('.publish-button');
+
+      saveButton.addEventListener('click', () => saveImage(imageUrl));
+      publishButton.addEventListener('click', () => publishNFT(imageUrl));
+    }
+
+    function saveImage(imageUrl) {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = 'ant-nft.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function publishNFT(imageUrl) {
+      window.open('https://opensea.io/asset/create', '_blank');
+    }
+
+    document.getElementById('imageForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!selectedAnimal || !selectedPower || !selectedBackground) {
+        alert('Please choose one creature base, one extraordinary power, and one background!');
+        return;
+      }
+      
+      addImageEntry(selectedAnimal, selectedPower, selectedBackground);
+    });
+
+    // Add initial default image
+    window.addEventListener('load', function() {
+      addImageEntry({text: "Cybernetic"}, {text: "Cybernetic-enhancing"}, {text: "Neon City"});
+    });
+  </script>
+</body></html>
